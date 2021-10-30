@@ -5,6 +5,8 @@
 #include<string>
 #include<sstream>
 #include<cstring>
+#include<boost/algorithm/string.hpp>
+using namespace boost::algorithm;
 using namespace std;
 using std::cin;
 using std::cout;
@@ -96,6 +98,8 @@ void account_query::read_from_file()
         {
             row.push_back(word);
         }
+        trim(row[1]);
+        trim(row[2]);
         rec.account_number = stol(row[0]);
         strcpy(rec.firstName, row[1].c_str());
         strcpy(rec.lastName, row[2].c_str());
