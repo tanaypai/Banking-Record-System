@@ -12,7 +12,7 @@
                 "${fileDirname}\\${fileBasenameNoExtension}.exe"
             ],
             "options": {
-                "cwd": "c:\\Users\\tanay\\Documents\\C++ Codes"
+                "cwd": "c:\\Users\\tanay\\Documents\\Banking Record System"
             },
             "problemMatcher": [
                 "$gcc"
