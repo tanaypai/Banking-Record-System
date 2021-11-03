@@ -44,7 +44,7 @@ void account_details::show_data()
     cout << "Account Number: " << this->account_number << endl;
     cout << "First Name: " << this->firstName << endl;
     cout << "Last Name: " << this->lastName << endl;
-    cout << "Current Balance: Rs.  " << this->total_Balance << endl;
+    cout << "Current Balance: Rs. " << this->total_Balance << endl;
     cout << "-------------------------------" << endl;
     
 }
@@ -57,8 +57,8 @@ public:
     void write_rec();
     void read_from_file();
     void show_list();
-    void search_rec(long);
-    void search_rec(char[]);
+    int search_rec(long);
+    int search_rec(char[]);
     void edit_rec();
     void delete_rec();
     void write_to_file();
@@ -126,31 +126,33 @@ void account_query::write_to_file()
     }
     fout.close();
 }
-void account_query::search_rec(long acc)
+int account_query::search_rec(long acc)
 {
-    for(auto item:RecordList)
+    for (int i = 0; i < RecordList.size(); ++i)
     {
-        if(item.account_number==acc)
+        if(RecordList[i].account_number==acc)
         {
             cout << "\nRecord Found!" << endl;
-            item.show_data();
-            return;
+            RecordList[i].show_data();
+            return i;
         }
     }
     cout << "\nRecord doesn't exist!" << endl;
+    return -1;
 }
-void account_query::search_rec(char name[])
+int account_query::search_rec(char name[])
 {   
-    for(auto item:RecordList)
+    for (int i = 0; i < RecordList.size(); ++i)
     {
-        if(strcmp(item.firstName,name)==0)
+        if(strcmp(RecordList[i].firstName,name)==0)
         {
             cout << "\nRecord Found!" << endl;
-            item.show_data();
-            return;
+            RecordList[i].show_data();
+            return i;
         }
     }
     cout << "\nRecord doesn't exist!" << endl;
+    return -1;
 }
 int main()
 {
