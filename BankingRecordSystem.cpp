@@ -59,8 +59,8 @@ public:
     void show_list();
     int search_rec(long);
     int search_rec(char[]);
-    void edit_rec();
-    void delete_rec();
+    void edit_rec(int);
+    void delete_rec(int);
     void write_to_file();
 };
 void account_query::write_rec()
@@ -154,10 +154,23 @@ int account_query::search_rec(char name[])
     cout << "\nRecord doesn't exist!" << endl;
     return -1;
 }
+void account_query::edit_rec(int index)
+{
+    cout << "Enter the new details for this record below." << endl;
+    RecordList[index].read_data();
+    cout << endl;
+    cout << "Record has been successfully modified." << endl;
+}
+void account_query::delete_rec(int index)
+{
+    RecordList.erase(RecordList.begin() + index);
+    cout << "Record has been successfully deleted." << endl;
+}
 int main()
 {
     account_query A;
-    int choice,searchmethod;
+    int choice,searchmethod,ind;
+    ind = 0;
     cout<<"***Acount Information System***"<<endl;
     A.read_from_file();
     while(true)
@@ -166,7 +179,7 @@ int main()
         cout<<"\n\t1-->Add record to the file";
         cout<<"\n\t2-->Show a list of all the Records on file";
         cout<<"\n\t3-->Search Record from file";
-        cout<<"\n\t4-->Update Record";
+        cout<<"\n\t4-->Edit Record";
         cout<<"\n\t5-->Delete Record";
         cout<<"\n\t6-->Quit";
         cout << "\nEnter your choice: ";
@@ -204,6 +217,58 @@ int main()
                     cout<<"\nEnter correct choice";
                     exit(0);
             }
+            break;
+        case 4: 
+            cout<<"Select how you would like to search for the record to edit.";
+            cout<<"\n\t1-->Search by account number";
+            cout<<"\n\t2-->Search by first name";
+            cout << "\nEnter your choice: ";
+            cin >> searchmethod;
+            switch(searchmethod)
+            {
+                case 1:
+                    long acc;
+                    cout << "Enter the account number you'd like to search for:  ";
+                    cin >> acc;
+                    ind=A.search_rec(acc);
+                    break;
+                case 2:
+                    char name[20];
+                    cout << "Enter the first name of the account you'd like to search for:  ";
+                    cin >> name;
+                    ind=A.search_rec(name);
+                    break;
+                default:
+                    cout<<"\nEnter correct choice";
+                    exit(0);
+            }
+            A.edit_rec(ind);
+            break;
+        case 5:
+            cout<<"Select how you would like to search for the record to delete.";
+            cout<<"\n\t1-->Search by account number";
+            cout<<"\n\t2-->Search by first name";
+            cout << "\nEnter your choice: ";
+            cin >> searchmethod;
+            switch(searchmethod)
+            {
+                case 1:
+                    long acc;
+                    cout << "Enter the account number you'd like to search for:  ";
+                    cin >> acc;
+                    ind=A.search_rec(acc);
+                    break;
+                case 2:
+                    char name[20];
+                    cout << "Enter the first name of the account you'd like to search for:  ";
+                    cin >> name;
+                    ind=A.search_rec(name);
+                    break;
+                default:
+                    cout<<"\nEnter correct choice";
+                    exit(0);
+            }
+            A.delete_rec(ind);
             break;
         case 6:
             A.write_to_file();
