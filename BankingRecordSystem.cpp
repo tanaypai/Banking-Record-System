@@ -62,6 +62,8 @@ public:
     void edit_rec(int);
     void delete_rec(int);
     void write_to_file();
+    void deposit(int);
+    void withdraw(int);
 };
 void account_query::write_rec()
 {
@@ -166,6 +168,29 @@ void account_query::delete_rec(int index)
     RecordList.erase(RecordList.begin() + index);
     cout << "Record has been successfully deleted." << endl;
 }
+void account_query::deposit(int i)
+{
+    int deposit_amount;
+    cout << "Enter the deposit amount: " << endl;
+    cin>>deposit_amount;
+    RecordList[i].total_Balance += deposit_amount;
+    cout << "Specified Amount has been successfully deposited." << endl;
+}
+void account_query::withdraw(int i)
+{
+    int withdraw_amount;
+    cout << "Enter the withdraw amount: " << endl;
+    cin>>withdraw_amount;
+    if(RecordList[i].total_Balance>withdraw_amount)
+    {
+        RecordList[i].total_Balance -= withdraw_amount; 
+    cout << "Specified Amount has been successfully withdrawn." << endl;
+    }
+    else 
+    {
+        cout << "Not enough balance" << endl;
+    }
+}
 int main()
 {
     account_query A;
@@ -181,7 +206,9 @@ int main()
         cout<<"\n\t3-->Search Record from file";
         cout<<"\n\t4-->Edit Record";
         cout<<"\n\t5-->Delete Record";
-        cout<<"\n\t6-->Quit";
+        cout<<"\n\t6-->Deposit Money into an account";
+        cout<<"\n\t7-->Withdraw Money from an account";
+        cout<<"\n\t8-->Quit";
         cout << "\nEnter your choice: ";
         cin>>choice;
         cout<<endl<< endl;
@@ -271,6 +298,58 @@ int main()
             A.delete_rec(ind);
             break;
         case 6:
+            cout<<"Select how you would like to search for the record to deposit money.";
+            cout<<"\n\t1-->Search by account number";
+            cout<<"\n\t2-->Search by first name";
+            cout << "\nEnter your choice: ";
+            cin >> searchmethod;
+            switch(searchmethod)
+            {
+                case 1:
+                    long acc;
+                    cout << "Enter the account number you'd like to search for:  ";
+                    cin >> acc;
+                    ind=A.search_rec(acc);
+                    break;
+                case 2:
+                    char name[20];
+                    cout << "Enter the first name of the account you'd like to search for:  ";
+                    cin >> name;
+                    ind=A.search_rec(name);
+                    break;
+                default:
+                    cout<<"\nEnter correct choice";
+                    exit(0);
+            }
+            A.deposit(ind);
+            break;
+        case 7:
+            cout<<"Select how you would like to search for the record to withdraw money.";
+            cout<<"\n\t1-->Search by account number";
+            cout<<"\n\t2-->Search by first name";
+            cout << "\nEnter your choice: ";
+            cin >> searchmethod;
+            switch(searchmethod)
+            {
+                case 1:
+                    long acc;
+                    cout << "Enter the account number you'd like to search for:  ";
+                    cin >> acc;
+                    ind=A.search_rec(acc);
+                    break;
+                case 2:
+                    char name[20];
+                    cout << "Enter the first name of the account you'd like to search for:  ";
+                    cin >> name;
+                    ind=A.search_rec(name);
+                    break;
+                default:
+                    cout<<"\nEnter correct choice";
+                    exit(0);
+            }
+            A.withdraw(ind);
+            break;
+        case 8:
             A.write_to_file();
             exit(0);
             break;
