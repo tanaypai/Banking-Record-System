@@ -25,6 +25,7 @@ public:
     float total_Balance;
     void read_data();
     void show_data();
+    void print_line();
 };
 void account_details::read_data()
 {
@@ -36,7 +37,6 @@ void account_details::read_data()
     cin>>this->lastName;
     cout<<"Enter Balance: ";
     cin>>this->total_Balance;
-    cout<<endl;
 }
 void account_details::show_data()
 {
@@ -45,8 +45,11 @@ void account_details::show_data()
     cout << "First Name: " << this->firstName << endl;
     cout << "Last Name: " << this->lastName << endl;
     cout << "Current Balance: Rs. " << this->total_Balance << endl;
-    cout << "-------------------------------" << endl;
     
+} 
+void account_details::print_line()
+{
+    cout << "-------------------------------" << endl;
 }
 class account_query
 {
@@ -70,6 +73,7 @@ void account_query::write_rec()
 {
     account_details record;
     record.read_data();
+    cout<<endl;
     RecordList.push_back(record);
 }
 void account_query::show_list()
@@ -78,6 +82,7 @@ void account_query::show_list()
     for(auto item:RecordList)
     {
         item.show_data();
+        item.print_line();
     }
 }
 void account_query::read_from_file()
@@ -137,6 +142,7 @@ int account_query::search_rec(long acc)
         {
             cout << "\nRecord Found!" << endl;
             RecordList[i].show_data();
+            RecordList[i].print_line();
             return i;
         }
     }
@@ -151,6 +157,7 @@ int account_query::search_rec(char name[])
         {
             cout << "\nRecord Found!" << endl;
             RecordList[i].show_data();
+            RecordList[i].print_line();
             return i;
         }
     }
@@ -219,24 +226,194 @@ int account_query::searchMenu()
     }
     return ind;
 }
+// int main()
+// {
+//     account_query A;
+//     int choice,ind;
+//     ind = 0;
+//     cout<<"***Acount Information System***"<<endl;
+//     A.read_from_file();
+//     while(true)
+//     {
+//         cout<<"Select one option below ";
+//         cout<<"\n\t1-->Add record to the file";
+//         cout<<"\n\t2-->Show a list of all the Records on file";
+//         cout<<"\n\t3-->Search Record from file";
+//         cout<<"\n\t4-->Edit Record";
+//         cout<<"\n\t5-->Delete Record";
+//         cout<<"\n\t6-->Deposit Money into an account";
+//         cout<<"\n\t7-->Withdraw Money from an account";
+//         cout<<"\n\t8-->Quit";
+//         cout << "\nEnter your choice: ";
+//         cin>>choice;
+//         cout<<endl<< endl;
+//         switch(choice)
+//         {
+//         case 1:
+//             A.write_rec();
+//             break;
+//         case 2:
+//             A.show_list();
+//             break;
+//         case 3:
+//             cout<<"Select one option below ";
+//             A.searchMenu();
+//             break;
+//         case 4: 
+//             cout<<"Select how you would like to search for the record to edit.";
+//             ind=A.searchMenu();
+//             A.edit_rec(ind);
+//             break;
+//         case 5:
+//             cout<<"Select how you would like to search for the record to delete.";
+//             ind=A.searchMenu();
+//             A.delete_rec(ind);
+//             break;
+//         case 6:
+//             cout<<"Select how you would like to search for the record to deposit money.";
+//             ind=A.searchMenu();
+//             A.deposit(ind);
+//             break;
+//         case 7:
+//             cout<<"Select how you would like to search for the record to withdraw money.";
+//             ind=A.searchMenu();
+//             A.withdraw(ind);
+//             break;
+//         case 8:
+//             A.write_to_file();
+//             exit(0);
+//             break;
+//         default:
+//             cout<<"\nEnter correct choice";
+//             exit(0);
+//         }
+//     }
+//     system("pause");
+//     return 0;
+// }
+class employee_account_details:public account_details
+{
+public:
+    float salary;
+    float rate;            
+    void read_data();
+    void show_data();
+};
+void employee_account_details::read_data()
+{
+    this->account_details::read_data();
+    cout<<"Enter Salary: ";
+    cin>>this->salary;
+    cout<<"Enter Hike rate: ";
+    cin>>this->rate;
+    cout<<endl;
+}
+void employee_account_details::show_data()
+{
+    this->account_details::show_data();   
+    cout << "Salary: Rs. " << this->salary << endl;
+    cout << "Rate: " << this->rate <<"%"<< endl;
+    this->print_line();
+}
+class employee_account_query
+{
+    private:
+        vector<employee_account_details> EmployeeRecordList;
+    public:
+        void write_rec();
+        void read_from_file();
+        void show_list();
+        int search_rec(long);
+        int search_rec(char[]);
+        void edit_rec(int);
+        void delete_rec(int);
+        void write_to_file();
+        void deposit(int);
+        void withdraw(int);
+        int searchMenu();
+};
+void employee_account_query::write_rec()
+{
+    employee_account_details record;
+    record.read_data();
+    EmployeeRecordList.push_back(record);
+}
+void employee_account_query::show_list()
+{
+    cout<<"\n****Data from file****"<<endl;
+    for(auto item:EmployeeRecordList)
+    {
+        item.show_data();
+    }
+}
+void employee_account_query::read_from_file()
+{
+    fstream fin;
+    fin.open("EmployeePayroll.csv", ios::in);
+    string line, word;
+    employee_account_details rec;
+    vector<string> row;
+    int i = 0;
+    while(getline(fin,line)) 
+    {   
+        if(i==0)
+        {
+            i++;
+            continue;
+        }
+        row.clear();
+        stringstream s(line);
+        while (getline(s, word,',')) 
+        {
+            row.push_back(word);
+        }
+        trim(row[1]);
+        trim(row[2]);
+        rec.account_number = stol(row[0]);
+        strcpy(rec.firstName, row[1].c_str());
+        strcpy(rec.lastName, row[2].c_str());
+        rec.total_Balance = stof(row[3]);
+        rec.salary = stof(row[4]);
+        rec.rate = stof(row[5]);
+        EmployeeRecordList.push_back(rec);
+    }
+}
+void employee_account_query::write_to_file()
+{
+    fstream fout;
+    fout.open("EmployeePayroll.csv", ios::out);
+    fout<< "Account Number" << ", "
+        << "First Name" << ", "
+        << "Last Name" << ", "
+        << "Total Balance" << ", "
+        << "Salary" << ", "
+        << "Rate"
+        << "\n";
+    for(auto item:EmployeeRecordList)
+    {
+        fout<< item.account_number << ", "
+            << item.firstName << ", "
+            << item.lastName << ", "
+            << item.total_Balance << ", "
+            << item.salary << ", "
+            << item.rate
+            << "\n";
+    }
+    fout.close();
+}
 int main()
 {
-    account_query A;
+    employee_account_query A;
+    A.read_from_file();
     int choice,ind;
     ind = 0;
     cout<<"***Acount Information System***"<<endl;
-    A.read_from_file();
     while(true)
     {
         cout<<"Select one option below ";
         cout<<"\n\t1-->Add record to the file";
         cout<<"\n\t2-->Show a list of all the Records on file";
-        cout<<"\n\t3-->Search Record from file";
-        cout<<"\n\t4-->Edit Record";
-        cout<<"\n\t5-->Delete Record";
-        cout<<"\n\t6-->Deposit Money into an account";
-        cout<<"\n\t7-->Withdraw Money from an account";
-        cout<<"\n\t8-->Quit";
+        cout<<"\n\t3-->Quit";
         cout << "\nEnter your choice: ";
         cin>>choice;
         cout<<endl<< endl;
@@ -249,30 +426,6 @@ int main()
             A.show_list();
             break;
         case 3:
-            cout<<"Select one option below ";
-            A.searchMenu();
-            break;
-        case 4: 
-            cout<<"Select how you would like to search for the record to edit.";
-            ind=A.searchMenu();
-            A.edit_rec(ind);
-            break;
-        case 5:
-            cout<<"Select how you would like to search for the record to delete.";
-            ind=A.searchMenu();
-            A.delete_rec(ind);
-            break;
-        case 6:
-            cout<<"Select how you would like to search for the record to deposit money.";
-            ind=A.searchMenu();
-            A.deposit(ind);
-            break;
-        case 7:
-            cout<<"Select how you would like to search for the record to withdraw money.";
-            ind=A.searchMenu();
-            A.withdraw(ind);
-            break;
-        case 8:
             A.write_to_file();
             exit(0);
             break;
