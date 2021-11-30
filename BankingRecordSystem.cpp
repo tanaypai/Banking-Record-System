@@ -64,6 +64,7 @@ public:
     void write_to_file();
     void deposit(int);
     void withdraw(int);
+    int searchMenu();
 };
 void account_query::write_rec()
 {
@@ -191,10 +192,37 @@ void account_query::withdraw(int i)
         cout << "Not enough balance" << endl;
     }
 }
+int account_query::searchMenu()
+{
+    int searchmethod,ind;
+    cout<<"\n\t1-->Search by account number";
+    cout<<"\n\t2-->Search by first name";
+    cout << "\nEnter your choice: ";
+    cin >> searchmethod;
+    switch(searchmethod)
+    {
+        case 1:
+            long acc;
+            cout << "Enter the account number you'd like to search for:  ";
+            cin >> acc;
+            ind=this->search_rec(acc);
+            break;
+        case 2:
+            char name[20];
+            cout << "Enter the first name of the account you'd like to search for:  ";
+            cin >> name;
+            ind=this->search_rec(name);
+            break;
+        default:
+            cout<<"\nEnter correct choice";
+            exit(0);
+    }
+    return ind;
+}
 int main()
 {
     account_query A;
-    int choice,searchmethod,ind;
+    int choice,ind;
     ind = 0;
     cout<<"***Acount Information System***"<<endl;
     A.read_from_file();
@@ -222,131 +250,26 @@ int main()
             break;
         case 3:
             cout<<"Select one option below ";
-            cout<<"\n\t1-->Search by account number";
-            cout<<"\n\t2-->Search by first name";
-            cout << "\nEnter your choice: ";
-            cin >> searchmethod;
-            switch(searchmethod)
-            {
-                case 1:
-                    long acc;
-                    cout << "Enter the account number you'd like to search for:  ";
-                    cin >> acc;
-                    A.search_rec(acc);
-                    break;
-                case 2:
-                    char name[20];
-                    cout << "Enter the first name of the account you'd like to search for:  ";
-                    cin >> name;
-                    A.search_rec(name);
-                    break;
-                default:
-                    cout<<"\nEnter correct choice";
-                    exit(0);
-            }
+            A.searchMenu();
             break;
         case 4: 
             cout<<"Select how you would like to search for the record to edit.";
-            cout<<"\n\t1-->Search by account number";
-            cout<<"\n\t2-->Search by first name";
-            cout << "\nEnter your choice: ";
-            cin >> searchmethod;
-            switch(searchmethod)
-            {
-                case 1:
-                    long acc;
-                    cout << "Enter the account number you'd like to search for:  ";
-                    cin >> acc;
-                    ind=A.search_rec(acc);
-                    break;
-                case 2:
-                    char name[20];
-                    cout << "Enter the first name of the account you'd like to search for:  ";
-                    cin >> name;
-                    ind=A.search_rec(name);
-                    break;
-                default:
-                    cout<<"\nEnter correct choice";
-                    exit(0);
-            }
+            ind=A.searchMenu();
             A.edit_rec(ind);
             break;
         case 5:
             cout<<"Select how you would like to search for the record to delete.";
-            cout<<"\n\t1-->Search by account number";
-            cout<<"\n\t2-->Search by first name";
-            cout << "\nEnter your choice: ";
-            cin >> searchmethod;
-            switch(searchmethod)
-            {
-                case 1:
-                    long acc;
-                    cout << "Enter the account number you'd like to search for:  ";
-                    cin >> acc;
-                    ind=A.search_rec(acc);
-                    break;
-                case 2:
-                    char name[20];
-                    cout << "Enter the first name of the account you'd like to search for:  ";
-                    cin >> name;
-                    ind=A.search_rec(name);
-                    break;
-                default:
-                    cout<<"\nEnter correct choice";
-                    exit(0);
-            }
+            ind=A.searchMenu();
             A.delete_rec(ind);
             break;
         case 6:
             cout<<"Select how you would like to search for the record to deposit money.";
-            cout<<"\n\t1-->Search by account number";
-            cout<<"\n\t2-->Search by first name";
-            cout << "\nEnter your choice: ";
-            cin >> searchmethod;
-            switch(searchmethod)
-            {
-                case 1:
-                    long acc;
-                    cout << "Enter the account number you'd like to search for:  ";
-                    cin >> acc;
-                    ind=A.search_rec(acc);
-                    break;
-                case 2:
-                    char name[20];
-                    cout << "Enter the first name of the account you'd like to search for:  ";
-                    cin >> name;
-                    ind=A.search_rec(name);
-                    break;
-                default:
-                    cout<<"\nEnter correct choice";
-                    exit(0);
-            }
+            ind=A.searchMenu();
             A.deposit(ind);
             break;
         case 7:
             cout<<"Select how you would like to search for the record to withdraw money.";
-            cout<<"\n\t1-->Search by account number";
-            cout<<"\n\t2-->Search by first name";
-            cout << "\nEnter your choice: ";
-            cin >> searchmethod;
-            switch(searchmethod)
-            {
-                case 1:
-                    long acc;
-                    cout << "Enter the account number you'd like to search for:  ";
-                    cin >> acc;
-                    ind=A.search_rec(acc);
-                    break;
-                case 2:
-                    char name[20];
-                    cout << "Enter the first name of the account you'd like to search for:  ";
-                    cin >> name;
-                    ind=A.search_rec(name);
-                    break;
-                default:
-                    cout<<"\nEnter correct choice";
-                    exit(0);
-            }
+            ind=A.searchMenu();
             A.withdraw(ind);
             break;
         case 8:
