@@ -207,7 +207,7 @@ int account_query::searchMenu()
     int searchmethod, ind;
     cout << "\n\t1-->Search by account number";
     cout << "\n\t2-->Search by first name";
-    cout << "\nEnter your choice: ";
+    cout << "\n\nEnter your choice: ";
     cin >> searchmethod;
     switch (searchmethod)
     {
@@ -232,25 +232,25 @@ int account_query::searchMenu()
 int account_query::account_query_menu()
 {
     account_query A;
-    int choice,ind;
+    int choice, ind;
     ind = 0;
-    cout<<"***Bank Account Information System***"<<endl;
+    cout << "***Bank Account Information System***" << endl;
     A.read_from_file();
-    while(true)
+    while (true)
     {
-        cout<<"Select one option below ";
-        cout<<"\n\t1-->Add record to the file";
-        cout<<"\n\t2-->Show a list of all the Records on file";
-        cout<<"\n\t3-->Search Record from file";
-        cout<<"\n\t4-->Edit Record";
-        cout<<"\n\t5-->Delete Record";
-        cout<<"\n\t6-->Deposit Money into an account";
-        cout<<"\n\t7-->Withdraw Money from an account";
-        cout<<"\n\t8-->Quit";
-        cout << "\nEnter your choice: ";
-        cin>>choice;
-        cout<<endl<< endl;
-        switch(choice)
+        cout << "Select one option below ";
+        cout << "\n\t1-->Add record to the file";
+        cout << "\n\t2-->Show a list of all the Records on file";
+        cout << "\n\t3-->Search Record from file";
+        cout << "\n\t4-->Edit Record";
+        cout << "\n\t5-->Delete Record";
+        cout << "\n\t6-->Deposit Money into an account";
+        cout << "\n\t7-->Withdraw Money from an account";
+        cout << "\n\t8-->Quit";
+        cout << "\n\nEnter your choice: ";
+        cin >> choice;
+        cout << endl;
+        switch (choice)
         {
         case 1:
             A.write_rec();
@@ -259,31 +259,31 @@ int account_query::account_query_menu()
             A.show_list();
             break;
         case 3:
-            cout<<"Select one option below ";
+            cout << "Select one option below ";
             A.searchMenu();
             break;
         case 4:
-            cout<<"Select how you would like to search for the record to edit.";
-            ind=A.searchMenu();
-            if(ind!=-1)
+            cout << "Select how you would like to search for the record to edit.";
+            ind = A.searchMenu();
+            if (ind != -1)
                 A.edit_rec(ind);
             break;
         case 5:
-            cout<<"Select how you would like to search for the record to delete.";
-            ind=A.searchMenu();
-            if(ind!=-1)
+            cout << "Select how you would like to search for the record to delete.";
+            ind = A.searchMenu();
+            if (ind != -1)
                 A.delete_rec(ind);
             break;
         case 6:
-            cout<<"Select how you would like to search for the record to deposit money.";
-            ind=A.searchMenu();
-            if(ind!=-1)
+            cout << "Select how you would like to search for the record to deposit money.";
+            ind = A.searchMenu();
+            if (ind != -1)
                 A.deposit(ind);
             break;
         case 7:
-            cout<<"Select how you would like to search for the record to withdraw money.";
-            ind=A.searchMenu();
-            if(ind!=-1)
+            cout << "Select how you would like to search for the record to withdraw money.";
+            ind = A.searchMenu();
+            if (ind != -1)
                 A.withdraw(ind);
             break;
         case 8:
@@ -291,7 +291,7 @@ int account_query::account_query_menu()
             exit(0);
             break;
         default:
-            cout<<"\nEnter correct choice";
+            cout << "\nEnter correct choice";
             exit(0);
         }
     }
@@ -460,7 +460,7 @@ int employee_account_query::searchMenu()
     int searchmethod, ind;
     cout << "\n\t1-->Search by account number";
     cout << "\n\t2-->Search by first name";
-    cout << "\nEnter your choice: ";
+    cout << "\n\nEnter your choice: ";
     cin >> searchmethod;
     switch (searchmethod)
     {
@@ -515,10 +515,9 @@ int employee_account_query::employee_account_query_menu()
         cout << "\n\t6-->Raise Salary";
         cout << "\n\t7-->Pay Salary";
         cout << "\n\t8-->Quit";
-        cout << "\nEnter your choice: ";
+        cout << "\n\nEnter your choice: ";
         cin >> choice;
-        cout << endl
-             << endl;
+        cout << endl;
         switch (choice)
         {
         case 1:
@@ -565,29 +564,29 @@ int employee_account_query::employee_account_query_menu()
 }
 int main()
 {
-    cout<<"\nSelect one option below ";
-    cout<<"\n\t1-->Bank Management System";
-    cout<<"\n\t2-->Employee Payroll System";
-    cout << "\nEnter your choice: ";
+    cout << "\nSelect one option below ";
+    cout << "\n\t1-->Bank Management System";
+    cout << "\n\t2-->Employee Payroll System";
+    cout << "\n\nEnter your choice: ";
     int choice;
-    cin>>choice;
-    cout<<endl<<endl;
-    switch(choice)
+    cin >> choice;
+    cout << endl;
+    switch (choice)
     {
-        case 1:
-        {
-            account_query obj;
-            obj.account_query_menu();
-            break;
-        }
-        case 2:
-        {
-            employee_account_query obj;
-            obj.employee_account_query_menu();
-            break;
-        }
-        default:
-            cout << "\nEnter correct choice";
-            exit(0);
+    case 1:
+    {
+        account_query obj;
+        obj.account_query_menu();
+        break;
+    }
+    case 2:
+    {
+        employee_account_query obj;
+        obj.employee_account_query_menu();
+        break;
+    }
+    default:
+        cout << "\nEnter correct choice";
+        exit(0);
     }
 }
