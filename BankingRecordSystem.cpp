@@ -1,3 +1,12 @@
+
+// Topic: Banking Record System
+
+// Aheesh Reddy - 180907584
+// Varun Sriram - 180907740
+// Pranav Kabra - 180907572
+// Santhoshini Devarasetty-180907624
+// Tanay Pai - 180907494
+
 #include <iostream>
 #include <fstream>
 #include <cstdlib>
